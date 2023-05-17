@@ -8,11 +8,11 @@ window.onload = function() {
 class ToDoItem {
     title:string;
     dueDate:Date;
-    isCompleted:boolean;
+    isComplete:boolean;
     constructor(title:string, dueDate:Date, isCompleted:boolean) {
         this.title = title;
         this.dueDate = dueDate;
-        this.isCompleted = isCompleted;
+        this.isComplete = isCompleted;
     }
 }
 
@@ -51,8 +51,7 @@ function isTextPresent(id:string, errMsg:string):boolean {
 function getToDoItem():ToDoItem {
     let title = (<HTMLInputElement>$("title")).value;
     let dueDate = (<HTMLInputElement>$("dueDate")).value;
-    //let isCompleted = (<HTMLInputElement>$("isCompleted")).checked;
-    let isCompleted = false;
+    let isCompleted = (<HTMLInputElement>$("isComplete")).checked;
     return new ToDoItem(title, new Date(dueDate), isCompleted);
 }
 
@@ -66,8 +65,20 @@ function addToList():void {
 
 function displayToDoItem(item:ToDoItem):void {
     let displayDiv = $("display");
-    let itemPar = document.createElement("p");
-    itemPar.innerText = item.title + " " + item.dueDate.toString() + " " + item.isCompleted;
-    displayDiv.appendChild(itemPar);
+    let itemDiv = document.createElement("div");
+    let title = document.createElement("h3");
+    title.innerText = item.title;
+    itemDiv.appendChild(title);
+    let dueDate = document.createElement("p");
+    dueDate.innerText = item.dueDate.toString();
+    itemDiv.appendChild(dueDate);
+    let isComplete = document.createElement("input");
+    isComplete.type = "checkbox";
+    isComplete.checked = item.isComplete;
+    let completeLabel = document.createElement("label");
+    completeLabel.innerText = "Complete?";
+    itemDiv.appendChild(completeLabel);
+    itemDiv.appendChild(isComplete);
+    displayDiv.appendChild(itemDiv);
 }
 

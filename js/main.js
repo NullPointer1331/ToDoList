@@ -7,7 +7,7 @@ var ToDoItem = (function () {
     function ToDoItem(title, dueDate, isCompleted) {
         this.title = title;
         this.dueDate = dueDate;
-        this.isCompleted = isCompleted;
+        this.isComplete = isCompleted;
     }
     return ToDoItem;
 }());
@@ -34,7 +34,7 @@ function isTextPresent(id, errMsg) {
 function getToDoItem() {
     var title = $("title").value;
     var dueDate = $("dueDate").value;
-    var isCompleted = false;
+    var isCompleted = $("isComplete").checked;
     return new ToDoItem(title, new Date(dueDate), isCompleted);
 }
 function addToList() {
@@ -46,7 +46,19 @@ function addToList() {
 }
 function displayToDoItem(item) {
     var displayDiv = $("display");
-    var itemPar = document.createElement("p");
-    itemPar.innerText = item.title + " " + item.dueDate.toString() + " " + item.isCompleted;
-    displayDiv.appendChild(itemPar);
+    var itemDiv = document.createElement("div");
+    var title = document.createElement("h3");
+    title.innerText = item.title;
+    itemDiv.appendChild(title);
+    var dueDate = document.createElement("p");
+    dueDate.innerText = item.dueDate.toString();
+    itemDiv.appendChild(dueDate);
+    var isComplete = document.createElement("input");
+    isComplete.type = "checkbox";
+    isComplete.checked = item.isComplete;
+    var completeLabel = document.createElement("label");
+    completeLabel.innerText = "Complete?";
+    itemDiv.appendChild(completeLabel);
+    itemDiv.appendChild(isComplete);
+    displayDiv.appendChild(itemDiv);
 }
