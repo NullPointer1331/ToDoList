@@ -2,6 +2,15 @@ var picker = datepicker("#dueDate");
 picker.setMin(new Date());
 window.onload = function () {
     $("addToDo").onclick = addToList;
+    $("clearToDo").onclick = clearToDoItems;
+    if (localStorage.getItem("ToDoList")) {
+        var list = JSON.parse(localStorage.getItem("ToDoList"));
+        for (var i = 0; i < list.length; i++) {
+            var item = list[i];
+            toDoList.push(item);
+            displayToDoItem(item);
+        }
+    }
 };
 var ToDoItem = (function () {
     function ToDoItem(title, dueDate, isCompleted) {
@@ -14,6 +23,12 @@ var ToDoItem = (function () {
 var toDoList = [];
 function $(element) {
     return document.getElementById(element);
+}
+function clearToDoItems() {
+    var displayDiv = $("display");
+    displayDiv.innerHTML = "";
+    toDoList = [];
+    localStorage.clear();
 }
 function isValid() {
     var title = $("title").value;
@@ -35,13 +50,14 @@ function getToDoItem() {
     var title = $("title").value;
     var dueDate = $("dueDate").value;
     var isCompleted = $("isComplete").checked;
-    return new ToDoItem(title, new Date(dueDate), isCompleted);
+    return new ToDoItem(title, dueDate, isCompleted);
 }
 function addToList() {
     if (isValid()) {
         var item = getToDoItem();
         toDoList.push(item);
         displayToDoItem(item);
+        localStorage.setItem("ToDoList", JSON.stringify(toDoList));
     }
 }
 function displayToDoItem(item) {
@@ -68,4 +84,5 @@ function displayToDoItem(item) {
 function checkboxClick(id) {
     var item = toDoList[parseInt(id)];
     item.isComplete = !item.isComplete;
+    localStorage.setItem("ToDoList", JSON.stringify(toDoList));
 }

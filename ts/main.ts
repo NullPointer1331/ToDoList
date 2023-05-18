@@ -4,13 +4,22 @@ picker.setMin(new Date());
 
 window.onload = function() {
     $("addToDo").onclick = addToList;
+    $("clearToDo").onclick = clearToDoItems;
+    if(localStorage.getItem("ToDoList")) {
+        let list:ToDoItem[] = JSON.parse(localStorage.getItem("ToDoList"));
+        for(let i = 0; i < list.length; i++) {
+            let item:ToDoItem = list[i];
+            toDoList.push(item);
+            displayToDoItem(item);
+        }
+    }
 }
 
 class ToDoItem {
     title:string;
-    dueDate:Date;
+    dueDate:string;
     isComplete:boolean;
-    constructor(title:string, dueDate:Date, isCompleted:boolean) {
+    constructor(title:string, dueDate:string, isCompleted:boolean) {
         this.title = title;
         this.dueDate = dueDate;
         this.isComplete = isCompleted;
@@ -21,6 +30,13 @@ let toDoList:ToDoItem[] = [];
 
 function $(element:string):any{
     return document.getElementById(element); 
+}
+
+function clearToDoItems():void {
+    let displayDiv = $("display");
+    displayDiv.innerHTML = "";
+    toDoList = [];
+    localStorage.clear();
 }
 
 /**
@@ -57,7 +73,7 @@ function getToDoItem():ToDoItem {
     let title = (<HTMLInputElement>$("title")).value;
     let dueDate = (<HTMLInputElement>$("dueDate")).value;
     let isCompleted = (<HTMLInputElement>$("isComplete")).checked;
-    return new ToDoItem(title, new Date(dueDate), isCompleted);
+    return new ToDoItem(title, dueDate, isCompleted);
 }
 
 /**
@@ -68,6 +84,7 @@ function addToList():void {
         let item:ToDoItem = getToDoItem();
         toDoList.push(item);
         displayToDoItem(item);
+        localStorage.setItem("ToDoList", JSON.stringify(toDoList));
     }
 }
 
@@ -108,4 +125,5 @@ function displayToDoItem(item:ToDoItem):void {
 function checkboxClick(id:string):void {
     let item:ToDoItem = toDoList[parseInt(id)];
     item.isComplete = !item.isComplete;
+    localStorage.setItem("ToDoList", JSON.stringify(toDoList));
 }
