@@ -7,14 +7,16 @@ window.onload = function() {
     $("clearToDo").onclick = clearToDoItems;
     if(localStorage.getItem("ToDoList")) {
         let list:ToDoItem[] = JSON.parse(localStorage.getItem("ToDoList"));
-        for(let i = 0; i < list.length; i++) {
-            let item:ToDoItem = list[i];
+        for(let item of list) {
             toDoList.push(item);
             displayToDoItem(item);
         }
     }
 }
 
+/**
+ * This class represents an item on a ToDoList, with a title, due date, and completion status
+ */
 class ToDoItem {
     title:string;
     dueDate:string;
@@ -32,6 +34,9 @@ function $(element:string):any{
     return document.getElementById(element); 
 }
 
+/**
+ * This method clears all ToDoItems from the ToDoList array, from the web page, and from web storage
+ */
 function clearToDoItems():void {
     let displayDiv = $("display");
     displayDiv.innerHTML = "";

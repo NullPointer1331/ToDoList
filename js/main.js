@@ -5,8 +5,8 @@ window.onload = function () {
     $("clearToDo").onclick = clearToDoItems;
     if (localStorage.getItem("ToDoList")) {
         var list = JSON.parse(localStorage.getItem("ToDoList"));
-        for (var i = 0; i < list.length; i++) {
-            var item = list[i];
+        for (var _i = 0, list_1 = list; _i < list_1.length; _i++) {
+            var item = list_1[_i];
             toDoList.push(item);
             displayToDoItem(item);
         }
