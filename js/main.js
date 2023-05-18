@@ -47,6 +47,7 @@ function addToList() {
 function displayToDoItem(item) {
     var displayDiv = $("display");
     var itemDiv = document.createElement("div");
+    itemDiv.classList.add("todo");
     var title = document.createElement("h3");
     title.innerText = item.title;
     itemDiv.appendChild(title);
@@ -56,9 +57,15 @@ function displayToDoItem(item) {
     var isComplete = document.createElement("input");
     isComplete.type = "checkbox";
     isComplete.checked = item.isComplete;
+    isComplete.id = toDoList.indexOf(item).toString();
+    isComplete.onclick = function () { checkboxClick(isComplete.id); };
+    itemDiv.appendChild(isComplete);
     var completeLabel = document.createElement("label");
     completeLabel.innerText = "Complete?";
     itemDiv.appendChild(completeLabel);
-    itemDiv.appendChild(isComplete);
     displayDiv.appendChild(itemDiv);
+}
+function checkboxClick(id) {
+    var item = toDoList[parseInt(id)];
+    item.isComplete = !item.isComplete;
 }

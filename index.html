@@ -10,22 +10,24 @@
 </head>
 <body>
     <h1>ToDo List</h1>
+    <fieldset>
+        <label for="title">Title</label>
+        <input type="text" id="title">
+        <span>*</span>
+        <br>
 
-    <label for="title">Title</label>
-    <input type="text" id="title">
-    <span>*</span>
+        <label for="dueDate">Due Date</label>
+        <input type="text" id="dueDate">
+        <span>*</span>
+        <br>
+
+        <label for="isComplete">Is Complete?</label>
+        <input type="checkbox" id="isComplete">
+        <br><br>
+
+        <input type="button" id="addToDo" value="Add ToDo Item">
+    </fieldset>
     <br>
-
-    <label for="dueDate">Due Date</label>
-    <input type="text" id="dueDate">
-    <span>*</span>
-    <br>
-
-    <label for="isComplete">Is Complete?</label>
-    <input type="checkbox" id="isComplete">
-    <br>
-
-    <input type="button" id="addToDo" value="Add ToDo Item">
     <h2>To Do Items</h2>
     <div id="display">
 	</div>
